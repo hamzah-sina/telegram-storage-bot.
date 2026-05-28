@@ -2,7 +2,7 @@ from aiogram import Router
 from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.filters import Command
 from database import db
-from middlewares.auth_check import IsAdmin
+from auth_check import IsAdmin
 
 router = Router()
 
