@@ -3,10 +3,9 @@ import logging
 from aiogram import Bot, Dispatcher
 from aiogram.fsm.storage.memory import MemoryStorage
 
-from config import BOT_TOKEN, OWNER_ID
-from database import db
-from handlers import auth, files, admin
-from middlewares.rate_limit import RateLimitMiddleware
+import auth, files, admin
+from rate_limit import RateLimitMiddleware
+from auth_check import AuthCheckMiddleware RateLimitMiddleware
 from middlewares.auth_check import AuthCheckMiddleware
 
 # ─── إعداد اللوجز ──────────────────────────────────────────────────────────
