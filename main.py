@@ -5,7 +5,6 @@ from aiogram.fsm.storage.memory import MemoryStorage
 
 import auth, files, admin
 from rate_limit import RateLimitMiddleware
-from auth_check import AuthCheckMiddleware RateLimitMiddleware
 from middlewares.auth_check import AuthCheckMiddleware
 
 # ─── إعداد اللوجز ──────────────────────────────────────────────────────────
