@@ -17,14 +17,17 @@ logger = logging.getLogger(__name__)
 
 
 async def setup_owner():
-    if OWNER_ID:
-        # إضافة للأدمنز
+    if not OWNER_ID:
+        return
+    try:
         admins = await db.get_admins()
         if OWNER_ID not in admins:
             await db.add_admin(OWNER_ID)
-            logger.info(f"✅ تمت إضافة المالك {OWNER_ID} كأدمن.")
+            logger.info(f"✅ أُضيف المالك {OWNER_ID} كأدمن.")
+    except Exception as e:
+        logger.warning(f"⚠️ تعذّر إضافة الأدمن: {e}")
 
-        # إضافة للمستخدمين كمعتمد مباشرة
+    try:
         user = await db.get_user(OWNER_ID)
         if not user:
             await db.add_user(
@@ -33,7 +36,9 @@ async def setup_owner():
                 username=None
             )
             await db.approve_user(OWNER_ID)
-            logger.info(f"✅ تمت إضافة المالك {OWNER_ID} كمستخدم معتمد.")
+            logger.info(f"✅ أُضيف المالك {OWNER_ID} كمستخدم معتمد.")
+    except Exception as e:
+        logger.warning(f"⚠️ تعذّر إضافة المستخدم: {e}")
 
 
 async def main():
