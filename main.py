@@ -18,10 +18,22 @@ logger = logging.getLogger(__name__)
 
 async def setup_owner():
     if OWNER_ID:
+        # إضافة للأدمنز
         admins = await db.get_admins()
         if OWNER_ID not in admins:
             await db.add_admin(OWNER_ID)
             logger.info(f"✅ تمت إضافة المالك {OWNER_ID} كأدمن.")
+
+        # إضافة للمستخدمين كمعتمد مباشرة
+        user = await db.get_user(OWNER_ID)
+        if not user:
+            await db.add_user(
+                telegram_id=OWNER_ID,
+                full_name="المالك",
+                username=None
+            )
+            await db.approve_user(OWNER_ID)
+            logger.info(f"✅ تمت إضافة المالك {OWNER_ID} كمستخدم معتمد.")
 
 
 async def main():
